@@ -3,18 +3,17 @@
 import { useState, useEffect } from "react";
 import React from "react";
 
-import { apiKeyWeather, baseUrlWeather, apiKeyGeoCoding, baseUrlGeocoding, baseUrlWeatherIcon } from "../../lib/config"
-import { GeolocationPosition, propsCity } from "../../interfaces/globalInterface";
+import { apiKeyWeather, baseUrlWeather, apiKeyGeoCoding, baseUrlGeocoding } from "../../lib/config"
+import { GeolocationPosition, propsCity, WeatherHoursProps } from "../../interfaces/globalInterface";
 
 
 export default function Home() {
     const [inforWeather, setInfoWeather] = useState<propsCity | null>(null);
-    const [inforWeatherHours, setInforWeatherHours] = useState<any>();
+    const [inforWeatherHours, setInforWeatherHours] = useState<WeatherHoursProps>();
     const linkRequestuInfo = `${baseUrlWeather}/weather?lat={lat}&lon={lon}&appid={SuaChaveAPI}&units=metric`;
     const linkRequestInfoDays = `${baseUrlGeocoding}forecast?lat={lat}&lon={lon}&appid={SuaChaveAPI}&units=metric&cnt={cnt}`;
     const numeroHours: number = 10;
     const [geoLocationInfo, setGeolocationInfo] = useState<GeolocationPosition>();
-
 
     const getWeatherInfo = async () => {
         if (!geoLocationInfo) return;
@@ -181,7 +180,7 @@ export default function Home() {
                             <h2 className="text-lg sm:text-xl font-semibold text-blue-900 mb-4">Next hours</h2>
                             <div className="flex flex-wrap justify-center sm:justify-start gap-4">
                                 {inforWeatherHours &&
-                                    inforWeatherHours.list.slice(0, 8).map((item: any, index: number) => (
+                                    inforWeatherHours.list.slice(0, 8).map((item, index: number) => (
                                         <div key={index} className="w-[45%] sm:w-[110px] p-3 rounded-xl bg-white/70 text-center text-[#005fb5] shadow-sm">
                                             <p className="text-sm font-semibold">
                                                 {new Date(item.dt_txt).toLocaleTimeString('en-GB', {
